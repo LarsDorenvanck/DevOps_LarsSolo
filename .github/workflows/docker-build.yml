@@ -1,32 +1,22 @@
-name: Build Docker Image
+name: Docker Build and Push
 
 on:
   push:
     branches:
-      - main  # Replace 'main' with your default branch or the branch you want to trigger the build.
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Log in to DigitalOcean registry
+        run: echo "${{ secrets.DO_TOKEN }}" | docker login registry.digitalocean.com -u "${{ secrets.DO_USERNAME }}" --password-stdin
 
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Build Docker Image
+        run: docker build -t registry.digitalocean.com/devopsolo/your-image-name:latest .
 
-      - name: Log in to DigitalOcean Container Registry
-        run: doctl registry login --expiry-seconds 600
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: registry.digitalocean.com/your-registry/your-image-name:latest
+      - name: Push Docker Image
+        run: docker push registry.digitalocean.com/devopsolo/your-image-name:latest
