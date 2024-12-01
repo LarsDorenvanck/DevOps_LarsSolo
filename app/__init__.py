@@ -9,4 +9,5 @@ def create_app():
         # Import parts of our application
         from . import routes
 
+
     return app
