@@ -40,3 +40,9 @@ alembic/versions/*
 # System files
 .DS_Store
 Thumbs.db
+
+# Terraform variables
+*.tfvars
+*.tfvars.json
+*.tfstate
+*.lock.hcl
