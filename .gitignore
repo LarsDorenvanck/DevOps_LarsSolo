@@ -1,0 +1,42 @@
+# Ignore the .env file
+config/.env
+# Python virtual environment
+.venv/
+.env/
+.ENV/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Alembic
+alembic/versions/*
+!alembic/versions/.gitkeep
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Local development
+.env
+.env.local
+.env.*.local
+
+# Database files
+*.db
+*.sqlite3
+
+# System files
+.DS_Store
+Thumbs.db
