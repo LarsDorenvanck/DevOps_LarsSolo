@@ -30,9 +30,9 @@ jobs:
     - name: Build and push Docker image
       run: |
         echo "Building Docker image..."
-        docker build -t registry.digitalocean.com/my-registry/my-image:${{ github.sha }} .
+        docker build -t registry.digitalocean.com/devopsolo/your-image-name:${{ github.sha }} .
         echo "Pushing Docker image..."
-        docker push registry.digitalocean.com/my-registry/my-image:${{ github.sha }}
+        docker push registry.digitalocean.com/devopsolo/your-image-name:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
