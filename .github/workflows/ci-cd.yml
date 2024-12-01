@@ -62,5 +62,11 @@ jobs:
     # Step 5: Deploy to DigitalOcean Kubernetes Cluster
     - name: Deploy to Kubernetes
       run: |
-        kubectl --kubeconfig=kubeconfig.yaml set image deployment/my-app-deployment my-app-container=registry.digitalocean.com/my-registry/my-image:${{ github.sha }}
-        kubectl --kubeconfig=kubeconfig.yaml rollout restart deployment/my-app-deployment
+        # Save kubeconfig from DO cluster
+        doctl kubernetes cluster kubeconfig save $(doctl kubernetes cluster list --format ID --no-header)
+        
+        # Update the deployment with new image
+        kubectl set image deployment/my-app-deployment my-app-container=registry.digitalocean.com/devopsolo/your-image-name:${{ github.sha }}
+        
+        # Verify the rollout
+        kubectl rollout status deployment/my-app-deployment
