@@ -49,13 +49,17 @@ jobs:
         curl -sL https://github.com/digitalocean/doctl/releases/download/v1.93.0/doctl-1.93.0-linux-amd64.tar.gz | tar -xzv
         sudo mv doctl /usr/local/bin
 
-    # Step 3: Set up Kubernetes configuration
+    # Step 3: Authenticate with DigitalOcean
+    - name: Authenticate with DigitalOcean
+      run: doctl auth init -t ${{ secrets.DO_TOKEN }}
+
+    # Step 4: Set up Kubernetes configuration
     - name: Set up Kubeconfig
       run: echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
       env:
         KUBECONFIG: ${{ secrets.KUBECONFIG }}
 
-    # Step 4: Deploy to DigitalOcean Kubernetes Cluster
+    # Step 5: Deploy to DigitalOcean Kubernetes Cluster
     - name: Deploy to Kubernetes
       run: |
         kubectl --kubeconfig=kubeconfig.yaml set image deployment/my-app-deployment my-app-container=registry.digitalocean.com/my-registry/my-image:${{ github.sha }}
